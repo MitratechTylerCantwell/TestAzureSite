@@ -20,40 +20,37 @@
 
 //Using environment variables for DB connection information
 
-$connectstr_dbhost = '';
-$connectstr_dbname = '';
-$connectstr_dbusername = '';
-$connectstr_dbpassword = '';
-
-foreach ($_SERVER as $key => $value) {
-    if (strpos($key, "MYSQLCONNSTR_") !== 0) {
-        continue;
-    }
-    
-    $connectstr_dbhost = preg_replace("/^.*Data Source=(.+?);.*$/", "\\1", $value);
-    $connectstr_dbname = preg_replace("/^.*Database=(.+?);.*$/", "\\1", $value);
-    $connectstr_dbusername = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
-    $connectstr_dbpassword = preg_replace("/^.*Password=(.+?)$/", "\\1", $value);
-}
-
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', $connectstr_dbname);
+
+define('DB_NAME', getenv('DATABASE_NAME'));
 
 /** MySQL database username */
-define('DB_USER', $connectstr_dbusername);
+define('DB_USER', getenv('DATABASE_USERNAME'));
 
 /** MySQL database password */
-define('DB_PASSWORD', $connectstr_dbpassword);
+define('DB_PASSWORD',getenv('DATABASE_PASSWORD'));
 
 /** MySQL hostname */
-define('DB_HOST', $connectstr_dbhost);
+define('DB_HOST', getenv('DATABASE_HOST'));
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
+
+/** Turn OFF auto updates **/
+define( 'AUTOMATIC_UPDATER_DISABLED', true );
+
+/* Security for Wordpress : 
+you may wish to disable the plugin or theme editor to prevent overzealous users from being able to edit sensitive files and 
+potentially crash the site. Disabling these also provides an additional layer of security if a hacker gains access to a 
+well-privileged user account.
+Note : If your plugin or theme you use with your app requires editing of the files , comment the line below for 'DISALLOW_FILE_EDIT'
+*/
+define('DISALLOW_FILE_EDIT', true);
+
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -72,16 +69,6 @@ define('AUTH_SALT',        'put your unique phrase here');
 define('SECURE_AUTH_SALT', 'put your unique phrase here');
 define('LOGGED_IN_SALT',   'put your unique phrase here');
 define('NONCE_SALT',       'put your unique phrase here');
-
-
-/* Security for Wordpress : 
-you may wish to disable the plugin or theme editor to prevent overzealous users from being able to edit sensitive files and 
-potentially crash the site. Disabling these also provides an additional layer of security if a hacker gains access to a 
-well-privileged user account.
-Note : If your plugin or theme you use with your app requires editing of the files , comment the line below for 'DISALLOW_FILE_EDIT'
-*/
-define('DISALLOW_FILE_EDIT', true);
-
 
 /**#@-*/
 
